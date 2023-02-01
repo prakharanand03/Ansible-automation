@@ -1,0 +1,15 @@
+
+- hosts: "{{ HOST_NAME }}" 
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: "Restart Agent"
+      become: yes
+      shell: |
+          pkill -9 -u jitterbit
+          jitterbit stop
+          jitterbit start
+      register: datecmd
+      tags: datecmd
+    - debug: msg="{{datecmd.stdout}}"
+
